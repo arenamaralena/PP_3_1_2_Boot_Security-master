@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="container">
+    <h2>Registration</h2>
+    <form th:action="@{/registration}" th:object="${userForm}" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" th:field="*{username}" required />
+            <div th:if="${usernameError}" th:text="${usernameError}"></div>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" required />
+        </div>
+
+        <div>
+            <label for="passwordConfirm">Confirm Password:</label>
+            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" required />
+            <div  th:if="${passwordError}" th:text="${passwordError}"></div>
+        </div>
+
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}" required />
+            <div th:if="${nameError}" th:text="${nameError}"></div>
+        </div>
+
+        <div>
+            <label for="age">Age:</label>
+            <input type="number" id="age" th:field="*{age}" required min="1" />
+            <div th:if="${ageError}" th:text="${ageError}"></div>
+        </div>
+
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+    <div>
+        <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+    </div>
+</div>
+</body>
+</html>
