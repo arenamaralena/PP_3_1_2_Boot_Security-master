@@ -1,0 +1,47 @@
+package ru.kata.spring.boot_security.demo.model;
+
+import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "roles")
+public class Role implements GrantedAuthority {
+    @Id
+    private Integer id;
+
+    @Column(name = "role")
+    private String role;
+
+    public Role() {
+
+    }
+    public Role(Integer id) {
+        this.id = id;
+    }
+
+    public Role(Integer id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public String getAuthority() {
+        return getRole();
+    }
+}
