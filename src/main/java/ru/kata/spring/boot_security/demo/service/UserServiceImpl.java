@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         if (userFromDB != null) {
             return false;
         }
-        user.setRoles(Collections.singleton(new Role(1, "ROLE_USER")));
+        user.setRoles(Collections.singletonList(new Role(1, "ROLE_USER")));
         user.setPassword(user.getPassword());
         userRepository.save(user);
         return true;
@@ -77,6 +77,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return user;
+        return new User(user.getUsername(),user.getAge(),user.getUsername(),user.getPassword(),user.getRoles());
     }
 }
