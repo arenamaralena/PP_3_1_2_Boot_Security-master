@@ -1,12 +1,11 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -23,6 +22,8 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String passwordconfirm;
+    
     @Column(name = "name")
     private String name;
     @Column(name = "age")
@@ -106,6 +107,14 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
 
+    }
+
+    public String getPasswordConfirm() {
+        return passwordconfirm;
+    }
+
+    public void setPasswordConfirm(String password) {
+        this.passwordconfirm = password;
     }
 
 }
