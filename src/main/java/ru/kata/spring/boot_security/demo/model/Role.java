@@ -9,6 +9,7 @@ import java.util.List;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "role")
@@ -20,8 +21,9 @@ public class Role implements GrantedAuthority {
     public Role() {
 
     }
-    public Role(Integer id) {
-        this.id = id;
+
+    public Role(String role) {
+        this.role = role;
     }
 
     public Role(Integer id, String role) {
