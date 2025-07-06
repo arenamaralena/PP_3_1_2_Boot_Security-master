@@ -19,13 +19,13 @@ public class AdminController {
     @GetMapping()
     public String userList(Model model) {
         model.addAttribute("allUsers", userService.allUsers());
-        return "users";
+        return "admin";
     }
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
         userService.save(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/edit")
@@ -37,7 +37,7 @@ public class AdminController {
     @PostMapping("/edit_ready")
     public String update(@ModelAttribute("user") User user) {
         userService.edit(user);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/delete")
@@ -49,7 +49,7 @@ public class AdminController {
     @PostMapping(value = "/delete_ready")
     public String delete(@RequestParam("id") Long id) {
         userService.delete(id);
-        return "redirect:/users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/new")

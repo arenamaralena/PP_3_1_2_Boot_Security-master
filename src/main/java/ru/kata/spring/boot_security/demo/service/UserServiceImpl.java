@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
@@ -12,16 +13,17 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    final UserRepository userRepository;
-    final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -43,8 +45,11 @@ public class UserServiceImpl implements UserService {
         if (userFromDB != null) {
             return false;
         }
-        user.setRoles(Collections.singletonList(new Role(1, "ROLE_USER")));
-        user.setPassword(user.getPassword());
+        List<Role> roles = user.getRoles().stream()
+                .map(roleName -> new Role(roleName.getId(), "ROLE_" + roleName.getRole()))
+                .collect(Collectors.toList());
+        user.setRoles(roles);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return true;
     }
@@ -77,6 +82,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new User(user.getUsername(),user.getAge(),user.getUsername(),user.getPassword(),user.getRoles());
+        return new User(user.getUsername(),user.getAge(),user.getUsername(),user.getPassword(),user.getPasswordConfirm(),user.getRoles());
     }
 }

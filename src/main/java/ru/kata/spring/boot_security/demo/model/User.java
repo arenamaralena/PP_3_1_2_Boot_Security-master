@@ -8,6 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,10 +20,14 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotNull
     private String username;
 
+    @NotNull(message = "Пароль не может быть пустым")
     private String password;
 
+    @Transient
+    @NotNull(message = "Подтверждение пароля не может быть пустым")
     private String passwordconfirm;
 
     @Column(name = "name")
@@ -35,18 +41,22 @@ public class User implements UserDetails {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();
 
     public User() {
 
     }
 
-    public User(String name, Integer age, String username, String password, List<Role> roles) {
+    public User(String name, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
         this.name = name;
         this.age = age;
         this.username = username;
         this.password = password;
+        this.passwordconfirm = passwordconfirm;
         this.roles = roles;
+    }
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -61,11 +71,11 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -122,6 +132,9 @@ public class User implements UserDetails {
 
     public void setPasswordConfirm(String password) {
         this.passwordconfirm = password;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

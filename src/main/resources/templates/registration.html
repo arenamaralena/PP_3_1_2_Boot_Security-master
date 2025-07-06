@@ -7,31 +7,45 @@
 <body>
 <div class="container">
     <h2>Registration</h2>
-    <form action="/registration_done" method="post">
+    <form th:action="@{/registration}" method="post" th:object="${userForm}">
         <div>
             <label for="username">Username:</label>
-            <input type="text" id="username" required />
+            <input type="text" id="username" th:field="*{username}" required />
         </div>
 
         <div>
             <label for="password">Password:</label>
-            <input type="password" id="password" required />
+            <input type="password" id="password" th:field="*{password}" required />
         </div>
 
         <div>
             <label for="passwordConfirm">Confirm Password:</label>
-            <input type="password" id="passwordConfirm" required />
+            <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" required />
         </div>
 
         <div>
             <label for="name">Name:</label>
-            <input type="text" id="name" required />
+            <input type="text" id="name" th:field="*{name}" required />
         </div>
 
         <div>
             <label for="age">Age:</label>
-            <input type="number" id="age" required min="1" />
+            <input type="number" id="age" th:field="*{age}" required min="1" />
         </div>
+
+        <div>
+            <div>
+            <label>Roles:
+                <input type="checkbox" name="roles"
+                       th:each="role : ${allRoles}"
+                       th:text="${role.role}"
+                       th:value="${role.id}"
+                       th:field="*{roles}"
+                />
+            </label>
+            </div>
+        </div>
+
 
         <div>
             <button type="submit" value="register">Register</button>
