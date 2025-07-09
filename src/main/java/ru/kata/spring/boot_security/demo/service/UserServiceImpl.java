@@ -7,21 +7,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional(readOnly = true)
@@ -42,12 +44,15 @@ public class UserServiceImpl implements UserService {
         User userFromDB = userRepository.findByUsername(user.getUsername());
         if (userFromDB != null) {
             return false;
+        } else if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            return false;
         }
-        List<Role> roles = user.getRoles().stream()
-                .map(roleName -> new Role(roleName.getId(), roleName.getRole()))
-                .collect(Collectors.toList());
-        user.setRoles(roles);
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            Role userRole = roleRepository.findByName("ROLE_USER");
+            user.setRoles(List.of(userRole));
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
         userRepository.save(user);
         return true;
     }
@@ -80,6 +85,6 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new User(user.getUsername(), user.getAge(), user.getUsername(), user.getPassword(), user.getPasswordConfirm(), user.getRoles());
+        return user;
     }
 }

@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     @NotNull(message = "Пароль не может быть пустым")
     private String password;
 
-    @Transient
+    //@Transient
     @NotNull(message = "Подтверждение пароля не может быть пустым")
     private String passwordconfirm;
 
@@ -46,8 +47,7 @@ public class User implements UserDetails {
     public User() {
 
     }
-
-    public User(String name, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
+    public User(Integer id, String name, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
         this.name = name;
         this.age = age;
         this.username = username;
@@ -59,7 +59,7 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

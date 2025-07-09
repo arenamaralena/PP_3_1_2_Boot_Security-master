@@ -7,7 +7,7 @@
 <body>
 <div class="container">
     <h2>Registration</h2>
-    <form th:action="@{/registration}" method="post" th:object="${userForm}">
+    <form th:action="@{/registration}" method="post" th:object="${user}">
         <div>
             <label for="username">Username:</label>
             <input type="text" id="username" th:field="*{username}" required />
@@ -33,17 +33,7 @@
             <input type="number" id="age" th:field="*{age}" required min="1" />
         </div>
 
-        <div>
-            <div>
-            <label>Roles:</label>
-                <br/>
-                <select th:name="'roles[]'" multiple>
-                    <option th:each="role : ${roles}"
-                            th:text="${role.role}"
-                            th:value="${role.id}"></option>
-                </select>
-            </div>
-        </div>
+
 
 
         <div>

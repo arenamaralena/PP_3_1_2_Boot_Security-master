@@ -13,7 +13,7 @@ public class Role implements GrantedAuthority {
     private Integer id;
 
     @Column(name = "role")
-    private String role;
+    private String name;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
@@ -22,33 +22,33 @@ public class Role implements GrantedAuthority {
 
     }
 
-    public Role(String role) {
-        this.role = role;
+    public Role(String name) {
+        this.name = name;
     }
 
-    public Role(Integer id, String role) {
+    public Role(Integer id, String name) {
         this.id = id;
-        this.role = role;
+        this.name = name;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String role) {
+        this.name = name;
     }
 
     @Override
     public String getAuthority() {
-        return getRole();
+        return getName();
     }
     @Override
     public String toString() {
-        return this.role;
+        return this.name;
     }
 }
