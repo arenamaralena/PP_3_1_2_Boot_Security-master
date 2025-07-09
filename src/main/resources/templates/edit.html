@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/users/edit_ready(id=${user.getId()})}" th:object="${user}">
+<form th:method="POST" th:action="@{/users/edit(id=${user.getId()})}" th:object="${user}">
     <div>
         <label for="name">Enter name:</label>
         <input type="text" th:field="*{name}" id="name"/>

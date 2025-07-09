@@ -27,8 +27,7 @@ public class User implements UserDetails {
     @NotNull(message = "Пароль не может быть пустым")
     private String password;
 
-    //@Transient
-    @NotNull(message = "Подтверждение пароля не может быть пустым")
+    @Transient
     private String passwordconfirm;
 
     @Column(name = "name")

@@ -19,8 +19,8 @@
         <td th:text="${user.name}"/>
         <td th:text="${user.age}"/>
         <td>
-            <a th:href="@{/users/edit(id=${user.getId()})}">edit</a>
-            <a th:href="@{/users/delete(id=${user.getId()})}">delete</a>
+            <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>
+            <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>
 
         </td>
     </tr>
@@ -29,6 +29,6 @@
 <br/>
 <hr/>
 
-<a href="users/new">Add new User</a>
+<a href="admin/new">Add new User</a>
 </body>
 </html>

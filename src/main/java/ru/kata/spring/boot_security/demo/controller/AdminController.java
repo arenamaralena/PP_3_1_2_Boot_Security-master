@@ -34,7 +34,7 @@ public class AdminController {
         return "/edit";
     }
 
-    @PostMapping("/edit_ready")
+    @PostMapping("/edit")
     public String update(@ModelAttribute("user") User user) {
         userService.edit(user);
         return "redirect:/admin";
@@ -46,7 +46,7 @@ public class AdminController {
         return "/delete";
     }
 
-    @PostMapping(value = "/delete_ready")
+    @PostMapping(value = "/delete")
     public String delete(@RequestParam("id") Long id) {
         userService.delete(id);
         return "redirect:/admin";
@@ -54,7 +54,7 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "/new";
+        return "new";
     }
 
     @GetMapping("/gt/{userId}")

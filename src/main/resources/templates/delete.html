@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/users/delete_ready(id=${user.getId()})}" >
+<form th:method="POST" th:action="@{/users/delete(id=${user.getId()})}" >
     <div>
     <button type="submit">Delete this User</button>
     </div>
