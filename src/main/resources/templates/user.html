@@ -5,7 +5,18 @@
 </head>
 <body>
 <h1>User, welcome spring boot security page!</h1>
+<div>
 
+    <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+    <p><strong>Age:</strong> <span th:text="${user.age}"></span></p>
+    <p><strong>Username:</strong> <span th:text="${user.username}"></span></p>
+    <p><strong>Password:</strong> <span th:text="${user.password}"></span></p>
 
+    <p><strong>Roles:</strong></p>
+    <ul>
+        <li th:each="role : ${user.roles}" th:text="${role.name}"></li>
+    </ul>
+</div>
+<a href="/logout">Out</a>
 </body>
 </html>

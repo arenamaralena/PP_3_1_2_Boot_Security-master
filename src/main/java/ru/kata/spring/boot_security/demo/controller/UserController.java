@@ -18,7 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user")
+    @GetMapping()
     public String userHome(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", userService.getById(user.getId()));
         return "user";
