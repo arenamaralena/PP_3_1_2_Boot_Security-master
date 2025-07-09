@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public User getById(long id) {
+    public User getById(Long id) {
         return userRepository.getById(id);
     }
 
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void edit(User user) {
-        Optional<User> optionalUser = userRepository.findById((long) user.getId());
+        Optional<User> optionalUser = userRepository.findById(user.getId());
         if (optionalUser.isPresent()) {
             User editedUser = optionalUser.get();
             editedUser.setName(user.getName());

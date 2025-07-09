@@ -18,7 +18,7 @@ public class AdminController {
 
     @GetMapping()
     public String userList(Model model) {
-        model.addAttribute("allUsers", userService.allUsers());
+        model.addAttribute("users", userService.allUsers());
         return "admin";
     }
 
@@ -31,7 +31,7 @@ public class AdminController {
     @GetMapping("/edit")
     public String edit(Model model, @RequestParam("id") Long id) {
         model.addAttribute("user", userService.getById(id));
-        return "/edit";
+        return "edit";
     }
 
     @PostMapping("/edit")
@@ -40,11 +40,11 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/delete")
-    public String delete(Model model, @RequestParam("id") Long id) {
-        model.addAttribute("user", userService.getById(id));
-        return "/delete";
-    }
+//    @GetMapping("/delete")
+//    public String delete(Model model, @RequestParam("id") Long id) {
+//        model.addAttribute("user", userService.getById(id));
+//        return "delete";
+//    }
 
     @PostMapping(value = "/delete")
     public String delete(@RequestParam("id") Long id) {

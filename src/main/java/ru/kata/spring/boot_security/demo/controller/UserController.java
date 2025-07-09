@@ -18,9 +18,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/userpage") //rename after
+    @GetMapping("/user")
     public String userHome(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("user", userService.getById((long) user.getId()));
+        model.addAttribute("user", userService.getById(user.getId()));
         return "user";
     }
 }

@@ -19,7 +19,7 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotNull
     private String username;
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     public User() {
 
     }
-    public User(Integer id, String name, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
+    public User(Long id, String name, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
         this.name = name;
         this.age = age;
         this.username = username;
@@ -54,11 +54,11 @@ public class User implements UserDetails {
         this.passwordconfirm = passwordconfirm;
         this.roles = roles;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
