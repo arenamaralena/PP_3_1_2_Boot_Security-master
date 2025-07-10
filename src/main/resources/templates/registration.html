@@ -9,8 +9,8 @@
     <h2>Registration</h2>
     <form th:action="@{/registration}" method="post" th:object="${user}">
         <div>
-            <label for="username">Username:</label>
-            <input type="text" id="username" th:field="*{username}" required />
+            <label for="email">Email:</label>
+            <input type="text" id="email" th:field="*{username}" required />
         </div>
 
         <div>
@@ -24,8 +24,8 @@
         </div>
 
         <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" th:field="*{name}" required />
+            <label for="firstName">Name:</label>
+            <input type="text" id="firstName" th:field="*{firstName}" required />
         </div>
 
         <div>

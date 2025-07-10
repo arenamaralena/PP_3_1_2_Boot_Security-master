@@ -7,8 +7,8 @@
 <body>
 <form th:method="POST" th:action="@{/admin/edit(id=${user.getId()})}" th:object="${user}">
     <div>
-        <label for="name">Enter name:</label>
-        <input type="text" th:field="*{name}" id="name"/>
+        <label for="firstName">Enter firstName:</label>
+        <input type="text" th:field="*{firstName}" id="firstName"/>
         <br/>
         <label for="age">Enter age</label>
         <input type="text" th:field="*{age}" id="age"/>

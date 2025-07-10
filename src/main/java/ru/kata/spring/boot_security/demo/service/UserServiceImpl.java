@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findById(user.getId());
         if (optionalUser.isPresent()) {
             User editedUser = optionalUser.get();
-            editedUser.setName(user.getName());
+            editedUser.setFirstName(user.getFirstName());
+            editedUser.setLastName(user.getLastName());
             editedUser.setAge(user.getAge());
             userRepository.save(editedUser);
         }

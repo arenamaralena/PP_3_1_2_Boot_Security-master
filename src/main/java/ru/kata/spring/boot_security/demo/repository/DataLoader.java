@@ -30,11 +30,11 @@ public class DataLoader {
 
         if (userRepository.count() == 0) {
             Role adminRole = roleRepository.findByName("ROLE_ADMIN");
-            User admin1 = new User(null,"Admin", 30, "admin", "admin", "admin", List.of(adminRole));
+            Role userRole = roleRepository.findByName("ROLE_USER");
+            User admin1 = new User(null,"Admin","Admin", 30, "admin", "admin", "admin", List.of(adminRole,userRole));
             admin1.setPassword(passwordEncoder.encode("admin"));
             userRepository.save(admin1);
-            Role userRole = roleRepository.findByName("ROLE_USER");
-            User user = new User(null,"user", 30, "user", "user", "user", List.of(userRole));
+            User user = new User(null,"user","user", 30, "user", "user", "user", List.of(userRole));
             user.setPassword(passwordEncoder.encode("user"));
             userRepository.save(user);
         }

@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private Long id;
 
     @NotNull
-    private String username;
+    private String email;
 
     @NotNull(message = "Пароль не может быть пустым")
     private String password;
@@ -30,8 +30,12 @@ public class User implements UserDetails {
     @Transient
     private String passwordconfirm;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
     @Column(name = "age")
     private Integer age;
 
@@ -46,14 +50,17 @@ public class User implements UserDetails {
     public User() {
 
     }
-    public User(Long id, String name, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
-        this.name = name;
+
+    public User(Long id, String firstName, String lastName, Integer age, String email, String password, String passwordconfirm, List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.age = age;
-        this.username = username;
+        this.email = email;
         this.password = password;
         this.passwordconfirm = passwordconfirm;
         this.roles = roles;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -62,12 +69,20 @@ public class User implements UserDetails {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Integer getAge() {
@@ -90,7 +105,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -132,8 +147,9 @@ public class User implements UserDetails {
     public void setPasswordConfirm(String password) {
         this.passwordconfirm = password;
     }
-    public void setUsername(String username) {
-        this.username = username;
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
