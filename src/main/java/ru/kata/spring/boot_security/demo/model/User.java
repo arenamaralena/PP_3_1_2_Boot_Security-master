@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private Long id;
 
     @NotNull
-    private String email;
+    private String username;
 
     @NotNull(message = "Пароль не может быть пустым")
     private String password;
@@ -51,11 +51,11 @@ public class User implements UserDetails {
 
     }
 
-    public User(Long id, String firstName, String lastName, Integer age, String email, String password, String passwordconfirm, List<Role> roles) {
+    public User(Long id, String firstName, String lastName, Integer age, String username, String password, String passwordconfirm, List<Role> roles) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.passwordconfirm = passwordconfirm;
         this.roles = roles;
@@ -105,7 +105,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -148,8 +148,8 @@ public class User implements UserDetails {
         this.passwordconfirm = password;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }
