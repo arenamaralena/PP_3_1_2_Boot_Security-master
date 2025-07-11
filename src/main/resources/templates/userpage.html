@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style type="text/css">
-        body{
+        body {
             background: lightgray;
         }
         .logout-link {
@@ -18,11 +18,9 @@
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-
         .logout-link:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
-
         .sidebar {
             width: 280px;
             background-color: white;
@@ -33,38 +31,53 @@
         .custom-bg {
             color: #000;
         }
-
         .about-user-header {
             border: gray;
             padding: 10px;
+        }
+        .blue-box {
+            background-color: blue;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            max-height: 100px;
+            display: inline-block;
+            width: 100%;
+        }
+        .blue-box .nav-link {
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">
-            <span th:text="${user.username} + ' with roles ' + ${user.roles}" style="color: white;"></span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto"></ul>
-            <a class="nav-link logout-link" href="/logout">Logout</a>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">
+        <span th:text="${user.username} + ' with roles: ' + ${user.roles}" style="color: white;"></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto"></ul>
+        <a class="nav-link logout-link" href="/logout">Logout</a>
+    </div>
+</nav>
+
 <div class="d-flex mt-5">
     <div class="sidebar">
-        <hr class="bg-white">
-        <ul class="nav flex-column mb-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">User</a>
-            </li>
-        </ul>
+        <div class="blue-box">
+            <hr class="bg-white">
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">User</a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="container custom-bg flex-grow-1 mt-5">
-        <h2>User information page</h2>
+        <h2>User information-page</h2>
         <div class="about-user-header">
             <h6>About user</h6>
         </div>
