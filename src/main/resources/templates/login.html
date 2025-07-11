@@ -27,10 +27,10 @@ body {
 <body>
 
 <div class="wrapper">
-    <form class="form-signin">
+    <form class="form-signin" action="/login" method="post">
         <h2 class="from-signin-heading text-left">Please sign in</h2>
-        <input type="text" class="form-control" name="username" placeholder="Email address" required="" autofocus=""/>
-        <input type="password" class="form-control" name="password" placeholder="Password" required=""/>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Email address" required="" autofocus=""/>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required=""/>
         <div style="height: 20px;"></div>
         <button class="btn btn-lg btn-primary btn-block">Sign in</button>
     </form>
