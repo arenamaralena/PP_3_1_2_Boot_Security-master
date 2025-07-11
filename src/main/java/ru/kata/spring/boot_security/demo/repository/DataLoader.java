@@ -34,7 +34,7 @@ public class DataLoader {
             User admin1 = new User(null,"Admin","Admin", 30, "admin", "admin", "admin", List.of(adminRole,userRole));
             admin1.setPassword(passwordEncoder.encode("admin"));
             userRepository.save(admin1);
-            User user = new User(null,"user","user", 30, "user", "user", "user", List.of(userRole));
+            User user = new User(null,"user","user", 30, "user@y.ru", "user", "user", List.of(userRole));
             user.setPassword(passwordEncoder.encode("user"));
             userRepository.save(user);
         }
