@@ -107,12 +107,12 @@
                         <td>
                             <form method="GET" th:action="@{/admin/edit(id=${user.getId()})}">
                                 <input type="hidden" name="id" id="id" th:value="${user.getId()}" />
-                                <button type="submit" name="submit" value="value" class="link-button">EDIT</button>
+                                <button type="submit" name="submit" value="value" class="btn btn-info">EDIT</button>
                             </form>
                         </td>
                         <td>
                             <form method="POST" th:action="@{/admin/delete(id=${user.getId()})}">
-                                <button type="submit" name="submit" value="value" class="link-button">DELETE</button>
+                                <button type="submit" name="submit" value="value" class="btn btn-danger">DELETE</button>
                             </form>
                         </td>
                     </tr>
