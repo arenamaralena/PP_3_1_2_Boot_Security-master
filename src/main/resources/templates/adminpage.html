@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            background: lightgray;
+        }
+        .logout-link {
+            border: 1px solid white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .logout-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .sidebar {
+            width: 280px;
+            background-color: white;
+            color: black;
+            height: 100vh;
+            padding: 20px;
+        }
+        .custom-bg {
+            color: #000;
+        }
+        .blue-box {
+            background-color: blue;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            max-height: 100px;
+            display: inline-block;
+            width: 100%;
+        }
+        .blue-box .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">
+        <span th:text="${admin.username} + ' with roles: ' + ${admin.roles}" style="color: white;"></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto"></ul>
+        <a class="nav-link logout-link" href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="d-flex mt-5">
+    <div class="sidebar">
+        <div class="blue-box">
+            <hr class="bg-white">
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">User</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container custom-bg flex-grow-1 mt-5">
+        <h2>Admin panel</h2>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#users" data-toggle="tab">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#newUser" data-toggle="tab">New User</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="users">
+                <table class="table table-striped caption-top">
+                    <caption>All users</caption>
+                    <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${users}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.firstName}"></td>
+                        <td th:text="${user.lastName}"></td>
+                        <td th:text="${user.age}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.roles}"></td>
+                        <td>
+                            <form method="GET" th:action="@{/admin/edit(id=${user.getId()})}">
+                                <input type="hidden" name="id" id="id" th:value="${user.getId()}" />
+                                <button type="submit" name="submit" value="value" class="link-button">EDIT</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST" th:action="@{/admin/delete(id=${user.getId()})}">
+                                <button type="submit" name="submit" value="value" class="link-button">DELETE</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade" id="newUser">
+                <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+                    <div>
+                        <label for="firstName">Name</label>
+                        <input type="text" th:field="*{firstName}" id="firstName" required/>
+                        <br/>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" th:field="*{lastName}" id="lastName" required />
+                        <br/>
+                        <label for="age">Age</label>
+                        <input type="number" th:field="*{age}" id="age" required/>
+                        <br/>
+                        <div>
+                            <label for="username">Email:</label>
+                            <input type="text" th:field="*{username}" id="username" required />
+                        </div>
+                        <div>
+                            <label for="password">Password:</label>
+                            <input type="password" th:field="*{password}" id="password" required />
+                        </div>
+                        <div>
+                            <label for="passwordConfirm">Confirm Password:</label>
+                            <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" required />
+                        </div>
+                        <input type="submit" value="Add User"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
