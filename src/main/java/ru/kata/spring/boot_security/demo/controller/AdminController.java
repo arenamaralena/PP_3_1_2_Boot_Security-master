@@ -4,17 +4,23 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -22,6 +28,8 @@ public class AdminController {
         model.addAttribute("admin", userService.getById(admin.getId()));
         model.addAttribute("users", userService.allUsers());
         model.addAttribute("user", new User());
+        List<Role> availableRoles = roleService.getAllRoles();
+        model.addAttribute("availableRoles", availableRoles);
         return "adminpage";
     }
 

@@ -12,17 +12,6 @@
             background: lightgray;
         }
 
-        .logout-link {
-            border: 1px solid white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .logout-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
         .sidebar {
             width: 280px;
             background-color: white;
@@ -33,6 +22,16 @@
 
         .custom-bg {
             color: #000;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+        }
+
+        .btn-green {
+            background-color: #28a745; /* Зеленый цвет */
+            color: white;
         }
 
     </style>
@@ -121,39 +120,54 @@
             </div>
 
             <div class="tab-pane fade" id="newUser">
-                <form th:method="POST" th:action="@{/admin}" th:object="${user}">
-                    <div class="mb-3">
-                        <label for="firstName" class="form-label">First Name</label>
-                        <input type="text" th:field="*{firstName}" id="firstName" class="form-control" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="lastName" class="form-label">Last Name</label>
-                        <input type="text" th:field="*{lastName}" id="lastName" class="form-control" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="age" class="form-label">Age</label>
-                        <input type="number" th:field="*{age}" id="age" class="form-control" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Email:</label>
-                        <input type="text" th:field="*{username}" id="username" class="form-control" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password:</label>
-                        <input type="password" th:field="*{password}" id="password" class="form-control" required/>
-                    </div>
-                    <div class="mb-3">
-                        <label for="passwordConfirm" class="form-label">Confirm Password:</label>
-                        <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" class="form-control"
-                               required/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add User</button>
-                </form>
+                <div class="form-container">
+                    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
+                        <h5>Add new User</h5>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" th:field="*{firstName}" id="firstName" class="form-control" required/>
+                        </div>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" th:field="*{lastName}" id="lastName" class="form-control" required/>
+                        </div>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" th:field="*{age}" id="age" class="form-control" required/>
+                        </div>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="username" class="form-label">Email:</label>
+                            <input type="text" th:field="*{username}" id="username" class="form-control" required/>
+                        </div>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" th:field="*{password}" id="password" class="form-control" required/>
+                        </div>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="passwordConfirm" class="form-label">Confirm Password:</label>
+                            <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm"
+                                   class="form-control"
+                                   required/>
+                        </div>
+                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
+                            <label for="roles" class="form-label">Roles:</label>
+                            <select th:field="*{roles}" id="roles" class="form-select" multiple style="max-height: 150px; overflow-y: auto;">
+                                <option th:each="role : ${availableRoles}"
+                                        th:value="${role.id}"
+                                        th:text="${role.name}"
+                                        th:selected="${#lists.contains(user.roles, role)}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="text-center" style="margin: 0 auto;">
+                            <button type="submit" class="btn btn-green btn-lg btn-block">Add new User</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 
 </body>
 </html>
