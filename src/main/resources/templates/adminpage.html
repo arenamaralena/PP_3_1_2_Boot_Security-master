@@ -35,9 +35,6 @@
             color: #000;
         }
 
-        table {
-            caption-side: top;
-        }
     </style>
 </head>
 <body>
@@ -77,7 +74,7 @@
         <h2>Admin panel</h2>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#users" data-bs-toggle="tab">Users</a>
+                <a class="nav-link active" aria-current="page" href="#users" data-bs-toggle="tab">Users table</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#newUser" data-bs-toggle="tab">New User</a>
@@ -85,8 +82,8 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="users">
-                <table class="table table-striped">
-                    <caption>All users</caption>
+                <table class="table table-striped caption-top">
+                    <caption style="color: black;">All users</caption>
                     <thead class="thead-light">
                     <tr>
                         <th>ID</th>
