@@ -40,23 +40,25 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">
-        <span th:text="${admin.username} + ' with roles: ' + ${admin.roles}" style="color: white;"></span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto"></ul>
-        <a class="nav-link logout-link" href="/logout">Logout</a>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <span th:text="${admin.username} + ' with roles: ' + ${admin.roles}" style="color: white;"></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto"></ul>
+            <a class="nav-link" href="/logout">Logout</a>
+        </div>
     </div>
 </nav>
 
 <div class="d-flex mt-5">
     <div class="sidebar">
         <hr class="bg-white">
-        <ul class="nav flex-column mb-auto">
+        <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="#" class="nav-link active" aria-current="page">
                     Admin
@@ -108,7 +110,8 @@
                                 <input type="hidden" name="id" th:value="${user.getId()}"/>
                                 <button type="submit" class="btn btn-info">EDIT</button>
                             </form>
-                            <form method="POST" th:action="@{/admin/delete(id=${user.getId()})}" style="display:inline;">
+                            <form method="POST" th:action="@{/admin/delete(id=${user.getId()})}"
+                                  style="display:inline;">
                                 <button type="submit" class="btn btn-danger">DELETE</button>
                             </form>
                         </td>
@@ -141,7 +144,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="passwordConfirm" class="form-label">Confirm Password:</label>
-                        <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" class="form-control" required/>
+                        <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm" class="form-control"
+                               required/>
                     </div>
                     <button type="submit" class="btn btn-primary">Add User</button>
                 </form>

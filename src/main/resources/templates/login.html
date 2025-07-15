@@ -9,19 +9,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style type="text/css">
-body {
-    background: gainsboro;
-}
-.wrapper {
-    margin: 80px;
-}
-.form-signin {
-    max-width: 380px;
-    margin: 0 auto;
-}
-.form-signin .from-signin-heading {
-    margin-bottom: 20px;
-}
+        body {
+            background: gainsboro;
+        }
+
+        .wrapper {
+            margin: 80px;
+        }
+
+        .form-signin {
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .form-signin .from-signin-heading {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +32,8 @@ body {
 <div class="wrapper">
     <form class="form-signin" action="/login" method="post">
         <h2 class="from-signin-heading text-left">Please sign in</h2>
-        <input type="text" class="form-control" id="username" name="username" placeholder="Email address" required="" autofocus=""/>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Email address" required=""
+               autofocus=""/>
         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required=""/>
         <div style="height: 20px;"></div>
         <button class="btn btn-lg btn-primary btn-block">Sign in</button>
