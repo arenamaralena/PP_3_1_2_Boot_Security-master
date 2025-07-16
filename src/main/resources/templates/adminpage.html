@@ -151,7 +151,7 @@
                         </div>
                         <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
                             <label for="roles" class="form-label">Roles:</label>
-                            <select th:field="*{roles}" id="roles" class="form-select" multiple style="max-height: 150px; overflow-y: auto;">
+                            <select th:field="*{roles}" id="roles" class="form-select" multiple aria-label="multiple">
                                 <option th:each="role : ${availableRoles}"
                                         th:value="${role.id}"
                                         th:text="${role.name}"
@@ -168,6 +168,6 @@
 
         </div>
     </div>
-
+</div>
 </body>
 </html>
