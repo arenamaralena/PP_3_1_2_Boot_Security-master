@@ -42,7 +42,7 @@ public class AdminController {
     @GetMapping("/edit")
     public String edit(Model model, @RequestParam("id") Long id) {
         model.addAttribute("user", userService.getById(id));
-        return "edit";
+        return "adminpage";
     }
 
     @PostMapping("/edit")

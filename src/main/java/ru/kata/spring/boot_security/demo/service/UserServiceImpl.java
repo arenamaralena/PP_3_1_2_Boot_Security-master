@@ -43,8 +43,10 @@ public class UserServiceImpl implements UserService {
         User userFromDB = userRepository.findByUsername(user.getUsername());
         if (userFromDB != null) {
             return false;
-        } else if (!user.getPassword().equals(user.getPasswordConfirm())) {
+        } else if ((!user.getPassword().equals(user.getPasswordConfirm()))&&(user.getPasswordConfirm()!=null)) {
             return false;
+        } else if ((user.getPasswordConfirm()==null)&&(user.getPassword()!=null)) {
+            user.setPasswordConfirm(user.getPassword());
         }
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             Role userRole = roleService.findByName("ROLE_USER");

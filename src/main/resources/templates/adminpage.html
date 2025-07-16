@@ -105,10 +105,17 @@
                         <td th:text="${user.username}"></td>
                         <td th:text="${user.roles}"></td>
                         <td>
-                            <form method="GET" th:action="@{/admin/edit(id=${user.getId()})}" style="display:inline;">
-                                <input type="hidden" name="id" th:value="${user.getId()}"/>
-                                <button type="submit" class="btn btn-info">EDIT</button>
-                            </form>
+                            <button type="button" class="btn btn-info"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#editUserModal"
+                                    th:data-id="${user.id}"
+                                    th:data-firstname="${user.firstName}"
+                                    th:data-lastname="${user.lastName}"
+                                    th:data-age="${user.age}"
+                                    th:data-username="${user.username}"
+                                    th:data-roles="${user.roles}">
+                                EDIT
+                            </button>
                             <form method="POST" th:action="@{/admin/delete(id=${user.getId()})}"
                                   style="display:inline;">
                                 <button type="submit" class="btn btn-danger">DELETE</button>
@@ -143,12 +150,7 @@
                             <label for="password" class="form-label">Password:</label>
                             <input type="password" th:field="*{password}" id="password" class="form-control" required/>
                         </div>
-                        <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
-                            <label for="passwordConfirm" class="form-label">Confirm Password:</label>
-                            <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm"
-                                   class="form-control"
-                                   required/>
-                        </div>
+
                         <div class="mb-3" style="max-width: 400px; margin: 0 auto;">
                             <label for="roles" class="form-label">Roles:</label>
                             <select th:field="*{roles}" id="roles" class="form-select" multiple aria-label="multiple">
@@ -166,6 +168,48 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" th:action="@{/admin/edit(id=${user.getId()})}">
+                    <input type="hidden" name="id" th:value="${user.getId()}"/>
+                    <div class="mb-3">
+                        <label for="modalFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" name="firstName" id="modalFirstName" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" name="lastName" id="modalLastName" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalAge" class="form-label">Age</label>
+                        <input type="number" class="form-control" name="age" id="modalAge" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalUsername" class="form-label">Email</label>
+                        <input type="text" class="form-control" name="username" id="modalUsername" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalRoles" class="form-label">Role</label>
+                        <select class="form-select" name="roles" id="modalRoles" multiple>
+                            <option value="1">User</option>
+                            <option value="2">Admin</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Edit"/>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
