@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +23,7 @@ public class User implements UserDetails {
     private Long id;
 
     @NotNull
+    @Email
     private String username;
 
     @NotNull(message = "Пароль не может быть пустым")
