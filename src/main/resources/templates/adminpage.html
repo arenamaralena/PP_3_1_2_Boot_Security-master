@@ -30,7 +30,7 @@
         }
 
         .btn-green {
-            background-color: #28a745; /* Зеленый цвет */
+            background-color: #28a745;
             color: white;
         }
 
@@ -93,7 +93,6 @@
                         <th>Age</th>
                         <th>Email</th>
                         <th>Roles</th>
-                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -116,10 +115,17 @@
                                     th:data-roles="${user.roles}">
                                 EDIT
                             </button>
-                            <form method="POST" th:action="@{/admin/delete(id=${user.getId()})}"
-                                  style="display:inline;">
-                                <button type="submit" class="btn btn-danger">DELETE</button>
-                            </form>
+                            <button type="button" class="btn btn-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteUserModal"
+                                    th:data-id="${user.id}"
+                                    th:data-firstname="${user.firstName}"
+                                    th:data-lastname="${user.lastName}"
+                                    th:data-age="${user.age}"
+                                    th:data-username="${user.username}"
+                                    th:data-roles="${user.roles}">
+                                DELETE
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -179,8 +185,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" th:action="@{/admin/edit(id=${user.getId()})}">
-                    <input type="hidden" name="id" th:value="${user.getId()}"/>
+                <form method="POST" th:action="@{/admin/edit}">
+                    <input type="hidden" name="id" id="modalUserId"/>
+                    <div class="mb-3">
+                        <label for="modalUserIdDisplay" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="modalUserIdDisplay" disabled />
+                    </div>
                     <div class="mb-3">
                         <label for="modalFirstName" class="form-label">First Name</label>
                         <input type="text" class="form-control" name="firstName" id="modalFirstName" required/>
@@ -204,14 +214,112 @@
                             <option value="2">Admin</option>
                         </select>
                     </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Edit"/>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" th:action="@{/admin/delete}">
+                    <input type="hidden" name="id" id="deleteModalUserId"/>
+                    <div class="mb-3">
+                        <label for="deleteModalUserIdDisplay" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="deleteModalUserIdDisplay" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteModalFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="deleteModalFirstName" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteModalLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="deleteModalLastName" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteModalAge" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="deleteModalAge" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteModalUsername" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="deleteModalUsername" disabled />
+                    </div>
+                    <div class="mb-3">
+                        <label for="deleteModalRoles" class="form-label">Roles</label>
+                        <select class="form-select" id="deleteModalRoles" multiple disabled>
+                            <option value="1">User</option>
+                            <option value="2">Admin</option>
+                        </select>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" value="Edit"/>
+                        <input type="submit" class="btn btn-danger" value="Delete" />
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+<script>
+
+    const editUserModal = document.getElementById('editUserModal');
+    editUserModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const userId = button.getAttribute('data-id');
+        const firstName = button.getAttribute('data-firstname');
+        const lastName = button.getAttribute('data-lastname');
+        const age = button.getAttribute('data-age');
+        const username = button.getAttribute('data-username');
+        const roles = button.getAttribute('data-roles');
+
+        document.getElementById('modalUserId').value = userId;
+        document.getElementById('modalUserIdDisplay').value = userId;
+        document.getElementById('modalFirstName').value = firstName;
+        document.getElementById('modalLastName').value = lastName;
+        document.getElementById('modalAge').value = age;
+        document.getElementById('modalUsername').value = username;
+
+        const roleSelect = document.getElementById('modalRoles');
+        const selectedRoles = roles.split(',');
+        for (let option of roleSelect.options) {
+            option.selected = selectedRoles.includes(option.value);
+        }
+    });
+
+    const deleteUserModal = document.getElementById('deleteUserModal');
+    deleteUserModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const userId = button.getAttribute('data-id');
+        const firstName = button.getAttribute('data-firstname');
+        const lastName = button.getAttribute('data-lastname');
+        const age = button.getAttribute('data-age');
+        const username = button.getAttribute('data-username');
+        const roles = button.getAttribute('data-roles');
+
+        document.getElementById('deleteModalUserId').value = userId;
+        document.getElementById('deleteModalUserIdDisplay').value = userId;
+        document.getElementById('deleteModalFirstName').value = firstName;
+        document.getElementById('deleteModalLastName').value = lastName;
+        document.getElementById('deleteModalAge').value = age;
+        document.getElementById('deleteModalUsername').value = username;
+
+        const roleSelect = document.getElementById('deleteModalRoles');
+        const selectedRoles = roles ? roles.split(',') : [];
+        for (let option of roleSelect.options) {
+            option.selected = selectedRoles.includes(option.value);
+        }
+    });
+</script>
 </body>
 </html>

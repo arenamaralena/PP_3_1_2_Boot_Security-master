@@ -20,7 +20,7 @@
         <td th:text="${user.age}"/>
         <td>
             <form method="GET" th:action="@{/admin/edit(id=${user.getId()})}">
-                <input type="hidden" name="id" id="id" th:value="${user.getId()}" />
+                <input type="hidden" name="id" id="id" th:value="${user.getId()}"/>
                 <button type="submit" name="submit" value="value" class="link-button">EDIT</button>
             </form>
         </td>

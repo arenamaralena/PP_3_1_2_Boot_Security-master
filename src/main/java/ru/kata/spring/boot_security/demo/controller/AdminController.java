@@ -9,7 +9,10 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,7 +49,22 @@ public class AdminController {
     }
 
     @PostMapping("/edit")
-    public String update(@ModelAttribute("user") User user) {
+    public String update(@RequestParam Long id,
+                         @RequestParam String firstName,
+                         @RequestParam String lastName,
+                         @RequestParam int age,
+                         @RequestParam String username,
+                         @RequestParam (required = false) List<Long> roles) {
+        User user = new User();
+        user.setId(id);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setAge(age);
+        user.setUsername(username);
+        if (roles != null) {
+            List<Role> availableRoles = roles.stream().map(roleService::findById).filter(Objects::nonNull).collect(Collectors.toList());
+            user.setRoles(availableRoles);
+        }
         userService.edit(user);
         return "redirect:/admin";
     }
