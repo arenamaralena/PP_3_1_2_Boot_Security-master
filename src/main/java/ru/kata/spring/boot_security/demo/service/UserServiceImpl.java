@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
             userRepository.save(editedUser);
         }
     }
-
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
