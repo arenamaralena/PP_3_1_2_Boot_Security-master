@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -25,64 +27,61 @@ public class AdminController {
         this.userService = userService;
         this.roleService = roleService;
     }
-
-    @GetMapping()
-    public String userList(Model model,@AuthenticationPrincipal User admin) {
-        model.addAttribute("admin", userService.getById(admin.getId()));
-        model.addAttribute("users", userService.allUsers());
-        model.addAttribute("user", new User());
-        List<Role> availableRoles = roleService.getAllRoles();
-        model.addAttribute("availableRoles", availableRoles);
-        return "adminpage";
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.allUsers();
     }
 
-    @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         userService.save(user);
-        return "redirect:/admin";
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
-
-    @GetMapping("/edit")
-    public String edit(Model model, @RequestParam("id") Long id) {
-        model.addAttribute("user", userService.getById(id));
-        return "adminpage";
-    }
-
-    @PostMapping("/edit")
-    public String update(@RequestParam Long id,
-                         @RequestParam String firstName,
-                         @RequestParam String lastName,
-                         @RequestParam int age,
-                         @RequestParam String username,
-                         @RequestParam (required = false) List<Long> roles) {
-        User user = new User();
-        user.setId(id);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setAge(age);
-        user.setUsername(username);
-        if (roles != null) {
-            List<Role> availableRoles = roles.stream().map(roleService::findById).filter(Objects::nonNull).collect(Collectors.toList());
-            user.setRoles(availableRoles);
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User existingUser = userService.getById(id);
+        if (existingUser == null) {
+            return ResponseEntity.notFound().build();
         }
-        userService.edit(user);
-        return "redirect:/admin";
+
+        existingUser.setFirstName(userDetails.getFirstName());
+        existingUser.setLastName(userDetails.getLastName());
+        existingUser.setAge(userDetails.getAge());
+        existingUser.setUsername(userDetails.getUsername());
+
+        if (userDetails.getRoles() != null) {
+            List<Role> roles = userDetails.getRoles().stream()
+                    .map(role -> roleService.findById(role.getId()))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+            existingUser.setRoles(roles);
+        }
+
+        userService.edit(existingUser);
+        return ResponseEntity.ok(existingUser);
     }
 
-    @PostMapping("/delete")
-    public String delete(@RequestParam("id") Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        User user = userService.getById(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
         userService.delete(id);
-        return "redirect:/admin";
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
-        return "new";
+    @GetMapping("/roles")
+    public List<Role> getAllRoles() {
+        return roleService.getAllRoles();
     }
 
-    @GetMapping("/gt/{userId}")
-    public String gtUser(@PathVariable("userId") Long userId, Model model) {
-        model.addAttribute("allUsers", userService.getById(userId));
-        return "admin";
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getById(id);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
     }
 }
