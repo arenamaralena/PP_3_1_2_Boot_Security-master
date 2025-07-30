@@ -2,22 +2,18 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -27,6 +23,7 @@ public class AdminController {
         this.userService = userService;
         this.roleService = roleService;
     }
+
     @GetMapping
     public List<User> getAllUsers() {
         return userService.allUsers();
@@ -37,6 +34,7 @@ public class AdminController {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
         User existingUser = userService.getById(id);
