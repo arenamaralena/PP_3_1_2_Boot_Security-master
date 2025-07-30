@@ -1,40 +1,21 @@
 function createRow(user) {
-    const tr = document.createElement("tr");
+    const tr = document.createElement('tr');
+    tr.dataset.userid = user.id;
 
-    const idTd = document.createElement("td");
-    idTd.textContent = user.id;
-    tr.appendChild(idTd);
-
-    const firstNameTd = document.createElement("td");
-    firstNameTd.textContent = user.firstName;
-    tr.appendChild(firstNameTd);
-
-    const lastNameTd = document.createElement("td");
-    lastNameTd.textContent = user.lastName;
-    tr.appendChild(lastNameTd);
-
-    const ageTd = document.createElement("td");
-    ageTd.textContent = user.age;
-    tr.appendChild(ageTd);
-
-    const emailTd = document.createElement("td");
-    emailTd.textContent = user.username;
-    tr.appendChild(emailTd);
-
-    const rolesTd = document.createElement("td");
-    if (Array.isArray(user.roles)) {
-        rolesTd.textContent = user.roles.map(role => role.name ? role.name : role).join(", ");
-    } else {
-        rolesTd.textContent = user.roles || "";
-    }
-    tr.appendChild(rolesTd);
-
+    tr.innerHTML = `
+        <td>${user.id}</td>
+        <td>${user.firstName}</td>
+        <td>${user.lastName}</td>
+        <td>${user.age}</td>
+        <td>${user.username}</td>
+        <td>${user.roles.map(r => r.name.replace('ROLE_', '')).join(', ')}</td>
+    `;
     return tr;
 }
 
 function fillTable(users) {
-    const tbody = document.querySelector("tbody");
-    tbody.innerHTML = "";
+    const tbody = document.getElementById('userTableBody');
+    tbody.innerHTML = '';
 
     users.forEach(user => {
         const row = createRow(user);
@@ -43,15 +24,8 @@ function fillTable(users) {
 }
 
 function updateHeader(user) {
-    const headerEmail = document.getElementById("header-email");
-    const headerRoles = document.getElementById("header-roles");
-
-    headerEmail.textContent = user.username || "";
-    if (Array.isArray(user.roles)) {
-        headerRoles.textContent = user.roles.map(role => role.name ? role.name : role).join(", ");
-    } else {
-        headerRoles.textContent = user.roles || "";
-    }
+    document.getElementById('header-email').textContent = user.username;
+    document.getElementById('header-roles').textContent = user.roles.map(r => r.name.replace('ROLE_', '')).join(', ');
 }
 fetch('/api/user')
     .then(response => {
