@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +29,9 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public User getById(Long id) {
-        return userRepository.getById(id);
+        User user = userRepository.getById(id);
+        Hibernate.initialize(user.getRoles());
+        return user;
     }
 
     @Transactional(readOnly = true)
@@ -87,6 +90,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+        Hibernate.initialize(user.getRoles());
         return user;
     }
 }
