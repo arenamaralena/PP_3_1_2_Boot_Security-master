@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+
+  mysqldb:
+    container_name: mysql57
+    image: mysql:5.7
+    ports:
+      - 3308:3306
+    restart: always
+    environment:
+      MYSQL_DATABASE: users
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: use
+      MYSQL_PASSWORD: 1234
